@@ -9,7 +9,7 @@
  *
  */
 
-package net.nym.okhttp3library.serializator;
+package net.nym.okhttp3library.serializer;
 
 import com.alibaba.fastjson.JSON;
 
