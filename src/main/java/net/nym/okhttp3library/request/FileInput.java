@@ -9,29 +9,31 @@
  *
  */
 
-package net.nym.okhttp3library.serializer;
+package net.nym.okhttp3library.request;
 
-import com.alibaba.fastjson.JSON;
-
-import net.nym.httplibrary.http.NGenericsSerializer;
-
-import java.util.List;
+import java.io.File;
+import java.util.Locale;
 
 /**
  * @author niyueming
- * @date 2017-02-07
- * @time 13:41
+ * @date 2017-02-08
+ * @time 14:25
  */
 
-public class FastJsonGenericsSerializer implements NGenericsSerializer {
-    public static final FastJsonGenericsSerializer DEFAULT = new FastJsonGenericsSerializer();
-    @Override
-    public <T> T transform(String response, Class<T> tClass) {
-        return JSON.parseObject(response,tClass);
+public class FileInput {
+    public String key;
+    public String fileName;
+    public File file;
+    public FileInput(String key,String fileName,File file){
+        this.key = key;
+        this.fileName = fileName;
+        this.file = file;
     }
 
     @Override
-    public <T> List<T> transformList(String response, Class<T> tClass) {
-        return JSON.parseArray(response,tClass);
+    public String toString() {
+        return String.format(Locale.getDefault()
+                ,"FileInput{key='%s',fileName='%s',file='%s'}"
+                ,key,fileName,file.getAbsolutePath());
     }
 }

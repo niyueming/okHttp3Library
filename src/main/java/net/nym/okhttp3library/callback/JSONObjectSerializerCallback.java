@@ -11,8 +11,7 @@
 
 package net.nym.okhttp3library.callback;
 
-import net.nym.httplibrary.https.NGenericsSerializer;
-import net.nym.httplibrary.utils.JSONUtils;
+import net.nym.httplibrary.http.NGenericsSerializer;
 
 import java.lang.reflect.ParameterizedType;
 
