@@ -41,8 +41,10 @@ public abstract class OkHttp3Callback<RESULT> extends HttpCallback<Request, Resp
         }
 
         @Override
-        public void onResponse(Object o, int id) {
+        public void onResponse(Object response, int id) {
 
         }
+
+
     };
 }

@@ -92,47 +92,47 @@ public class OkHttp3Manager implements NHttpManager<Request,OkHttp3Callback,Resp
 
     @Override
     public void enqueue(final Request request, OkHttp3Callback callback, final int id) {
-        if (callback == null){
+        if (callback == null) {
             callback = OkHttp3Callback.okHttp3CallbackDefault;
-            final OkHttp3Callback finalOkHttp3Callback = callback;
-            Call call = mOkHttpClient.newCall(request);
-            call.enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    sendFailResultCallback(call,e,finalOkHttp3Callback,id);
-                }
+        }
+        final OkHttp3Callback finalOkHttp3Callback = callback;
+        Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                sendFailResultCallback(call,e,finalOkHttp3Callback,id);
+            }
 
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    try {
-                        if (call.isCanceled()){
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    if (call.isCanceled()){
                         sendFailResultCallback(call,new IOException("canceled!"),finalOkHttp3Callback,id);
                         return;
-                        }
-                        if (!finalOkHttp3Callback.validateResponse(response,id)){
-                            sendFailResultCallback(
-                                    call
-                                    , new IOException("request failed , response's code is : " + response.code())
-                                    , finalOkHttp3Callback
-                                    , id
-                            );
-                            return;
-                        }
-
-                        Object o = finalOkHttp3Callback.parseNetworkResponse(response,id);
-                        sendSuccessResultCallback(o,finalOkHttp3Callback,id);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        sendFailResultCallback(call,e,finalOkHttp3Callback,id);
-                    }finally {
-                        if (response.body() != null){
-                            response.body().close();
-                        }
+                    }
+                    if (!finalOkHttp3Callback.validateResponse(response,id)){
+                        sendFailResultCallback(
+                                call
+                                , new IOException("request failed , response's code is : " + response.code())
+                                , finalOkHttp3Callback
+                                , id
+                        );
+                        return;
                     }
 
+                    Object o = finalOkHttp3Callback.parseNetworkResponse(response,id);
+                    sendSuccessResultCallback(o,finalOkHttp3Callback,id);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    sendFailResultCallback(call,e,finalOkHttp3Callback,id);
+                }finally {
+                    if (response.body() != null){
+                        response.body().close();
+                    }
                 }
-            });
-        }
+
+            }
+        });
     }
 
     public void sendFailResultCallback(final Call call, final Exception e, final OkHttp3Callback okHttpCallback, final int id) {
