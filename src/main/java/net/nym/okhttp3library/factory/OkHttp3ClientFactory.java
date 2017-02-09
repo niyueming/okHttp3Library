@@ -56,7 +56,7 @@ public class OkHttp3ClientFactory {
      */
     public static OkHttpClient sslSocketOkHttpClient(Context context, SSLSocketFactory sslSocketFactory, X509TrustManager trustManager){
         OkHttpClient.Builder builder = defaultBuilder(context);
-        builder.sslSocketFactory(sslSocketFactory,trustManager);
+        builder.sslSocketFactory(sslSocketFactory);
         return builder.build();
     }
 

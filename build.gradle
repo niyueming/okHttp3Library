@@ -39,7 +39,7 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
     compile project(':httpLibrary')
-    compile 'com.squareup.okhttp3:okhttp:3.3.1'
+    compile project(':frescoImageLoaderLibrary')
     compile "com.android.support:appcompat-v7:$rootProject.ext.supportLibVersion"
     compile "com.alibaba:fastjson:$rootProject.ext.fastjsonLibVersion"
 }
