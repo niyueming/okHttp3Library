@@ -97,6 +97,14 @@ public class OkHttp3Manager implements NHttpManager<Request,OkHttp3Callback,Resp
         }
         final OkHttp3Callback finalOkHttp3Callback = callback;
         Call call = mOkHttpClient.newCall(request);
+
+        mPlatform.execute(new Runnable() {
+            @Override
+            public void run() {
+                finalOkHttp3Callback.onBefore(request,id);
+            }
+        });
+
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
