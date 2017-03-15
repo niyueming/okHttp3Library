@@ -143,7 +143,7 @@ public class OkHttp3Manager implements NHttpManager<Request,OkHttp3Callback,Resp
         });
     }
 
-    public void sendFailResultCallback(final Call call, final Exception e, final OkHttp3Callback okHttpCallback, final int id) {
+    private void sendFailResultCallback(final Call call, final Exception e, final OkHttp3Callback okHttpCallback, final int id) {
         if (okHttpCallback == null) {
             return;
         }
@@ -157,7 +157,7 @@ public class OkHttp3Manager implements NHttpManager<Request,OkHttp3Callback,Resp
         });
     }
 
-    public void sendSuccessResultCallback(final Object object, final OkHttp3Callback okHttpCallback, final int id){
+    private void sendSuccessResultCallback(final Object object, final OkHttp3Callback okHttpCallback, final int id){
         if (okHttpCallback == null) {
             return;
         }
