@@ -42,6 +42,12 @@ public class OkHttp3ClientFactory {
     private final static int READ_TIMEOUT = 60;  //秒
     private final static int WRITE_TIMEOUT = 60;  //秒
 
+    private static boolean DEBUG = true;
+
+    public static void setDebug(boolean debug){
+        DEBUG = debug;
+    }
+
     public static OkHttpClient defaultOkHttpClient(Context context){
         OkHttpClient.Builder builder = defaultBuilder(context);
         return builder.build();
@@ -85,7 +91,7 @@ public class OkHttp3ClientFactory {
                 .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
 //                .sslSocketFactory(sslParams.sSLSocketFactory) //自定义https证书
                 ;
-        if (BuildConfig.DEBUG){
+        if (DEBUG){
             builder.addInterceptor(new LoggerInterceptor("OkHttp3", true));
         }
         return builder;
