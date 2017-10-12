@@ -14,6 +14,7 @@ package net.nym.okhttp3library.request;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.webkit.URLUtil;
 
 import net.nym.httplibrary.NHttpManager;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import okhttp3.FormBody;
@@ -200,10 +202,35 @@ public class OkHttp3Request implements NRequest<OkHttp3Callback, Response> {
                     }
                     builder.url(url).post(formBody);
 
-                    //TODO raw形式
-                    /**
-                     * ({@link OkHttp3Request#MEDIA_TYPE_PLAIN},{@link OkHttp3Request#MEDIA_TYPE_STREAM})
-                     */
+                    break;
+                //TODO raw形式
+                /**
+                 * ({@link OkHttp3Request#MEDIA_TYPE_PLAIN},{@link OkHttp3Request#MEDIA_TYPE_STREAM})
+                 */
+                case POST_RAW:
+                    String content0 = joinParams(params);
+                    RequestBody requestBody0 = RequestBody.create(MEDIA_TYPE_PLAIN, content0);
+                    builder.url(url).post(requestBody0);
+                    break;
+                case PUT:
+                    String content = joinParams(params);
+                    RequestBody requestBody = RequestBody.create(MEDIA_TYPE_PLAIN, content);
+                    builder.url(url).put(requestBody);
+                    break;
+                case DELETE:
+                    String content1 = joinParams(params);
+                    if (!TextUtils.isEmpty(content1)){
+                        RequestBody requestBody1 = RequestBody.create(MEDIA_TYPE_PLAIN, content1);
+                        builder.url(url).delete(requestBody1);
+                    }else {
+                        builder.url(url).delete();
+                    }
+
+                    break;
+                case PATCH:
+                    String content2 = joinParams(params);
+                    RequestBody requestBody2 = RequestBody.create(MEDIA_TYPE_PLAIN, content2);
+                    builder.url(url).patch(requestBody2);
                     break;
                 case HEAD:
                     builder.url(appendParams(url,params)).head();
@@ -220,6 +247,24 @@ public class OkHttp3Request implements NRequest<OkHttp3Callback, Response> {
             okHttp3Request.requestId = requestId;
 
             return okHttp3Request;
+        }
+
+        private String joinParams(Map<String, String> params){
+
+            StringBuffer builder = new StringBuffer();
+            Set<String> keys = params.keySet();
+            Iterator<String> iterator = keys.iterator();
+            while (iterator.hasNext())
+            {
+                String key = iterator.next();
+                builder.append(key).append("=").append(params.get(key)).append("&");
+            }
+
+            if (builder.length() > 0){
+                builder.deleteCharAt(builder.length() - 1);
+            }
+
+            return builder.toString();
         }
 
         private String appendParams(String url, Map<String, String> params)
@@ -274,4 +319,5 @@ public class OkHttp3Request implements NRequest<OkHttp3Callback, Response> {
         }
 
     }
+
 }
