@@ -95,6 +95,11 @@ public class OkHttp3Request implements NRequest<OkHttp3Callback, Response> {
             tag = context;
         }
 
+        public Builder tag(Object tag){
+            this.tag = tag;
+            return this;
+        }
+
         public Builder method(METHOD method){
             this.method = method;
             return this;
