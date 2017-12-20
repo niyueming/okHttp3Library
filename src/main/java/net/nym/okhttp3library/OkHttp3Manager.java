@@ -115,7 +115,7 @@ public class OkHttp3Manager implements NHttpManager<Request,OkHttp3Callback,Resp
             public void onResponse(Call call, Response response) throws IOException {
                 try {
                     if (call.isCanceled()){
-                        sendFailResultCallback(call,new IOException("canceled!"),finalOkHttp3Callback,id);
+                        sendFailResultCallback(call,new Exception("canceled!"),finalOkHttp3Callback,id);
                         return;
                     }
                     if (!finalOkHttp3Callback.validateResponse(response,id)){
