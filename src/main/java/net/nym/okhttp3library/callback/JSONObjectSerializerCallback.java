@@ -12,6 +12,7 @@
 package net.nym.okhttp3library.callback;
 
 import net.nym.httplibrary.http.NGenericsSerializer;
+import net.nym.okhttp3library.serializer.FastJsonGenericsSerializer;
 
 import java.lang.reflect.ParameterizedType;
 
@@ -25,6 +26,11 @@ import okhttp3.Response;
 
 public abstract class JSONObjectSerializerCallback<RESULT> extends OkHttp3Callback<RESULT> {
     private NGenericsSerializer mSerializer;
+
+    public JSONObjectSerializerCallback(){
+        this(FastJsonGenericsSerializer.DEFAULT);
+    }
+
 
     public JSONObjectSerializerCallback(NGenericsSerializer serializer){
         mSerializer = serializer;

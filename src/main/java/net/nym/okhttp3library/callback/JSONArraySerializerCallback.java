@@ -12,6 +12,7 @@
 package net.nym.okhttp3library.callback;
 
 import net.nym.httplibrary.http.NGenericsSerializer;
+import net.nym.okhttp3library.serializer.FastJsonGenericsSerializer;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -26,6 +27,10 @@ import okhttp3.Response;
 
 public abstract class JSONArraySerializerCallback<T> extends OkHttp3Callback<List<T>> {
     private NGenericsSerializer mSerializer;
+
+    public JSONArraySerializerCallback(){
+        this(FastJsonGenericsSerializer.DEFAULT);
+    }
 
     public JSONArraySerializerCallback(NGenericsSerializer serializer){
         mSerializer = serializer;
